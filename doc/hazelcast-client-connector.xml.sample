@@ -1,0 +1,3 @@
+<!-- BEGIN_INCLUDE(hazelcast-client:greet) -->
+    <hazelcast-client:greet config-ref="" friend="#[map-payload:friend]" />
+<!-- END_INCLUDE(hazelcast-client:greet) -->
