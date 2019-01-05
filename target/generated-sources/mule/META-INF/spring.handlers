@@ -1,0 +1,1 @@
+http\://www.mulesoft.org/schema/mule/hazelcast-client=org.mule.modules.hazelcastclient.generated.config.HazelcastClientNamespaceHandler
