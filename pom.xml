@@ -34,8 +34,53 @@
 		<dependency>
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast-client</artifactId>
-			<version>3.9.3</version>
+			<version>3.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast</artifactId>
+			<version>3.11</version>
 		</dependency>
 
 	</dependencies>
+	
+	<build>
+ <plugins>
+   <plugin>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-shade-plugin</artifactId>
+     <version>3.0.0</version>
+     <configuration>
+       <!-- Custom shade configuration -->
+       <artifactSet>
+         <includes>
+            <include>com.hazelcast:hazelcast</include> <!-- the.group.id:the-artifact-id -->
+            <include>com.hazelcast:hazelcast-client</include>
+         </includes>
+       </artifactSet>
+       <relocations>
+         <relocation>
+            <pattern>com.hazelcast</pattern> <!-- original.package.name -->
+            <shadedPattern>com.rlab.shaded.com.hazelcast</shadedPattern> <!-- new.shaded.package.name -->
+         </relocation>
+       </relocations>
+      </configuration>
+   </plugin>
+
+   <plugin> <!-- Use this explicit plugin configuration to properly install a shaded custom connector in Anypoint Studio -->
+     <groupId>org.mule.tools.devkit</groupId>
+     <artifactId>mule-devkit-maven-plugin</artifactId>
+     <version>${mule.devkit.version}</version>
+     <extensions>true</extensions>
+     <configuration>
+       <attachShadedJar>true</attachShadedJar>
+       <attachConnectorLibs>false</attachConnectorLibs>
+       <skipStudioPluginPackage>${devkit.studio.package.skip}</skipStudioPluginPackage>
+     </configuration>
+   </plugin>
+
+   <!-- Other plugins -->
+ </plugins>
+</build>
+	
 </project>
